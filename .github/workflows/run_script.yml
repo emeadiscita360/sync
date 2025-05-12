@@ -1,9 +1,9 @@
-name: Run Python Script Weekly
+name: Run Python Script Hourly
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Every Monday at 09:00 UTC
-  workflow_dispatch:  # Optional: allows manual triggering of the workflow
+    - cron: '0 * * * *'  # Runs every hour at minute 0
+  workflow_dispatch:      # Allows manual triggering from GitHub UI
 
 jobs:
   run-script:
@@ -19,5 +19,13 @@ jobs:
           python-version: '3.11'
 
       - name: Run the script
-        run: python ItemStatus.py
+        run: |
+          python ItemStatus.py
+
+      - name: Upload log file
+        uses: actions/upload-artifact@v4
+        with:
+          name: script-log
+          path: log.txt
+
 
