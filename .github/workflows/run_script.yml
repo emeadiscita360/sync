@@ -2,8 +2,8 @@ name: Run Python Script Hourly
 
 on:
   schedule:
-    - cron: '5 * * * *'  
-  workflow_dispatch:      
+    - cron: '5 * * * *'  # Runs at 5 minutes past every hour
+  workflow_dispatch:
 
 jobs:
   run-script:
@@ -18,6 +18,11 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas sqlalchemy pyodbc
+
       - name: Run the script
         run: |
           python ItemStatus.py
@@ -27,5 +32,3 @@ jobs:
         with:
           name: script-log
           path: log.txt
-
-
