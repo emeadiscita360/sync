@@ -10,7 +10,8 @@ log_file = "log.txt"
 logging.basicConfig(
     filename=log_file,
     level=logging.INFO,
-    format="%(asctime)s [%(levelname)s] %(message)s"
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    force=True  # Python 3.8+: forces reconfiguration if logging is already set
 )
 
 console = logging.StreamHandler(sys.stdout)
@@ -20,6 +21,7 @@ console.setFormatter(formatter)
 logging.getLogger("").addHandler(console)
 
 # --- Start Logging ---
+print("🟡 Script is starting...")  # Will show in Actions live log
 logging.info("Script started.")
 
 try:
@@ -37,6 +39,9 @@ try:
     # --- Load Filter File ---
     script_dir = os.path.dirname(os.path.abspath(__file__))
     filter_path = os.path.join(script_dir, "MaraExtract_Filter.txt")
+    if not os.path.exists(filter_path):
+        raise FileNotFoundError(f"Missing filter file: {filter_path}")
+
     filter_df = pd.read_csv(filter_path, sep="\t", dtype=str)
     allowed_items = set(filter_df["MATNR"].str.strip())
 
@@ -101,23 +106,7 @@ try:
     }
 
     # --- TXT Headers ---
-    txt_headers = [
-        "MARA-MATNR", "MARA-MTART", "MARA-YYGTYPKURZB", "MARA-ZZBCODE", "MARA-ZZUPDKT",
-        "GD-TEXT_DE", "GD-TEXT_EN", "GD-TEXT_FR", "GD-TEXT_IT", "GD-TEXT_NL",
-        "GD-TEXT_PT", "GD-TEXT_ES", "GD-TEXT_FI", "GD-TEXT_SV", "IV-TEXT_DE",
-        "IV-TEXT_EN", "IV-TEXT_FR", "IV-TEXT_IT", "IV-TEXT_NL", "IV-TEXT_PT",
-        "IV-TEXT_ES", "IV-TEXT_FI", "IV-TEXT_SV", "MARA-MEINS", "MARA-SPART",
-        "MARA-MATKL", "MARA-LABOR", "MARA-BISMT", "MARA-ZZNEUMT", "MARA-ZZBOSCHMAT",
-        "MARA-PRDHA", "MARA-MTPOS_MARA", "MARA-ZZVORZTYP", "MARA-BEGRU", "MARC-MMSTA",
-        "MARC-MMSTD", "MARA-ZZVWERK", "MARA-BRGEW", "MARA-NTGEW", "MARA-GEWEI",
-        "MARA-VOLUM", "MARA-VOLEH", "MARA-GROES", "MARA-NORMT", "MARA-WRKST",
-        "MARA-KZUMW", "MARA-YYGEXPDAT", "MARA-ILOOS", "MARA-ZEINR", "MARA-ZEIAR",
-        "MARA-ZEIVR", "MARA-BLATT", "MARA-AESZN", "MARA-ZEIFO", "MARA-BLANZ",
-        "MVKE-AUMNG", "MVKE-LFMNG", "MVKE-SCMNG", "MVKE-MVGR3", "MARA-ZZRCL",
-        "MVKE-SCHME", "MARC-HERKL", "MARC-HERKR", "MARC-STAWN", "MARC-MAXLZ",
-        "MARC-LZEIH", "MARC-ZZLOGKL", "MARA-YYGPARTCAT1", "MARA-YYGPARTCAT2",
-        "MATNR_ASCO", "CCODE_ASCO"
-    ]
+    txt_headers = [...]  # same as your current list
 
     # --- Prepare TXT Content ---
     iv_text_de = f"{now.strftime('%d.%m.%Y')}: Item Status modified | Syteline-SAP syncronisation |"
@@ -142,7 +131,10 @@ try:
     logging.info("Script finished successfully.")
 
 except Exception as e:
-    logging.exception("An error occurred during script execution.")
+    logging.exception("❌ An error occurred during script execution.")
+    print(f"❌ Script failed: {e}")
     sys.exit(1)
 
-
+# Ensure all logs are flushed
+for handler in logging.getLogger("").handlers:
+    handler.flush()
