@@ -2,8 +2,8 @@ name: Run Python Script Hourly
 
 on:
   schedule:
-    - cron: '5 * * * *'  # Runs at 5 minutes past every hour
-  workflow_dispatch:
+    - cron: '5 * * * *'  # Run at 5 minutes past every hour
+  workflow_dispatch:      # Enable manual trigger
 
 jobs:
   run-script:
@@ -18,16 +18,25 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install system dependencies for pyodbc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y unixodbc-dev
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install pandas sqlalchemy pyodbc
 
-      - name: Run the script
+      - name: Run Python script and save output to log.txt
         run: |
-          python ItemStatus.py
+          python ItemStatus.py > log.txt 2>&1
+
+      - name: List files (for debug)
+        run: ls -al
 
       - name: Upload log file
+        if: always()  # Always try to upload log even if script fails
         uses: actions/upload-artifact@v4
         with:
           name: script-log
