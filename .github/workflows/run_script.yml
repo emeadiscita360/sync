@@ -13,6 +13,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Show working directory
+        run: pwd
+
+      - name: List files before running
+        run: ls -al
+
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
@@ -28,15 +34,27 @@ jobs:
           python -m pip install --upgrade pip
           pip install pandas sqlalchemy pyodbc
 
-      - name: Run Python script and save output to log.txt
+      - name: Run Python script and capture all output
         run: |
-          python ItemStatus.py > log.txt 2>&1
+          echo "Starting script execution..."
+          python ItemStatus.py > log.txt 2>&1 || echo "Script failed (non-zero exit)"
+          echo "Script finished."
 
-      - name: List files (for debug)
+      - name: List files after running
         run: ls -al
 
-      - name: Upload log file
-        if: always()  # Always try to upload log even if script fails
+      - name: Show contents of log.txt if it exists
+        if: always()
+        run: |
+          if [ -f log.txt ]; then
+            echo "Log output:"
+            cat log.txt
+          else
+            echo "log.txt not found!"
+          fi
+
+      - name: Upload log file (if created)
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: script-log
