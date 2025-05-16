@@ -33,3 +33,10 @@ FileNotFoundError: [Errno 2] No such file or directory: 'W:\\Workgroup\\ENG-La\\
 2025-05-15 09:55:14,940 [INFO] Script started.
 2025-05-15 09:55:38,709 [INFO] \u2705 Saved TXT file: W:\Workgroup\ENG-La\60_EngCrossFn\01_Master_Data_Management\30_GDWH-Data_in_ACCESS-Database\001_Python\scripts\WorkFiles\ItemStatusDiscrepancy_20250515_095530.txt
 2025-05-15 09:55:38,746 [INFO] Script finished successfully.
+2025-05-16 11:32:03,841 [INFO] Script started.
+2025-05-16 11:32:15,239 [INFO] \u2705 SQL rows returned: 6716
+2025-05-16 11:32:24,191 [INFO] \u2705 Filtered item count: 6716
+2025-05-16 11:32:24,224 [INFO] \u2705 WorkFiles directory path: T:\scripts\WorkFiles
+2025-05-16 11:32:24,270 [INFO] \u2705 Output TXT will be saved as: T:\scripts\WorkFiles\ItemStatusDiscrepancy_20250516_113215.txt
+2025-05-16 11:32:24,303 [INFO] \u2705 Saved TXT file: T:\scripts\WorkFiles\ItemStatusDiscrepancy_20250516_113215.txt
+2025-05-16 11:32:24,339 [INFO] Script finished successfully.
