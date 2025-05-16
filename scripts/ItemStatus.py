@@ -82,6 +82,7 @@ try:
     # --- Filter based on MaraExtract ---
     df["SAP_ItemNumber"] = df["SAP_ItemNumber"].astype(str).str.strip()
     df = df[df["SAP_ItemNumber"].isin(allowed_items)]
+    logging.info(f"✅ SQL rows returned: {len(df)}")
 
     # --- Generate Filenames ---
     now = datetime.now()
@@ -137,7 +138,9 @@ try:
     # --- Save TXT ---
     df_txt = pd.DataFrame(txt_rows, columns=txt_headers)
     df_txt.to_csv(txt_file, sep="\t", index=False)
-
+    logging.info(f"✅ Filtered item count: {len(df)}")
+    logging.info(f"✅ WorkFiles directory path: {workfiles_folder}")
+    logging.info(f"✅ Output TXT will be saved as: {txt_file}")
     logging.info(f"✅ Saved TXT file: {txt_file}")
     logging.info("Script finished successfully.")
 
