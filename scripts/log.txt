@@ -1,0 +1,35 @@
+2025-05-15 09:42:55,846 [INFO] Script started.
+2025-05-15 09:42:56,140 [ERROR] An error occurred during script execution.
+Traceback (most recent call last):
+  File "W:\Workgroup\ENG-La\60_EngCrossFn\01_Master_Data_Management\30_GDWH-Data_in_ACCESS-Database\001_Python\scripts\ItemStatus.py", line 40, in <module>
+    filter_df = pd.read_csv(filter_path, sep="\t", dtype=str)
+  File "c:\Users\E1243708\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1026, in read_csv
+    return _read(filepath_or_buffer, kwds)
+  File "c:\Users\E1243708\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 620, in _read
+    parser = TextFileReader(filepath_or_buffer, **kwds)
+  File "c:\Users\E1243708\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1620, in __init__
+    self._engine = self._make_engine(f, self.engine)
+                   ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "c:\Users\E1243708\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\parsers\readers.py", line 1880, in _make_engine
+    self.handles = get_handle(
+                   ~~~~~~~~~~^
+        f,
+        ^^
+    ...<6 lines>...
+        storage_options=self.options.get("storage_options", None),
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "c:\Users\E1243708\AppData\Local\Programs\Python\Python313\Lib\site-packages\pandas\io\common.py", line 873, in get_handle
+    handle = open(
+        handle,
+    ...<3 lines>...
+        newline="",
+    )
+FileNotFoundError: [Errno 2] No such file or directory: 'W:\\Workgroup\\ENG-La\\60_EngCrossFn\\01_Master_Data_Management\\30_GDWH-Data_in_ACCESS-Database\\001_Python\\scripts\\MaraExtract_Filter.txt'
+2025-05-15 09:44:24,256 [INFO] Script started.
+2025-05-15 09:44:42,722 [INFO] \u2705 Saved TXT file: W:\Workgroup\ENG-La\60_EngCrossFn\01_Master_Data_Management\30_GDWH-Data_in_ACCESS-Database\001_Python\scripts\WorkFiles\ItemStatusDiscrepancy_20250515_094434.txt
+2025-05-15 09:44:42,761 [INFO] Script finished successfully.
+2025-05-15 09:55:14,940 [INFO] Script started.
+2025-05-15 09:55:38,709 [INFO] \u2705 Saved TXT file: W:\Workgroup\ENG-La\60_EngCrossFn\01_Master_Data_Management\30_GDWH-Data_in_ACCESS-Database\001_Python\scripts\WorkFiles\ItemStatusDiscrepancy_20250515_095530.txt
+2025-05-15 09:55:38,746 [INFO] Script finished successfully.
